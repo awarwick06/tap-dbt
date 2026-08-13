@@ -101,6 +101,14 @@ class DBTStream(RESTStream):
                     else:
                         new_schema["properties"][p_name] = p_schema
 
+                # a property that was skipped above cannot also be required
+                if "required" in schema:
+                    new_schema["required"] = [
+                        p_name
+                        for p_name in schema["required"]
+                        if p_name in new_schema["properties"]
+                    ]
+
             if "items" in schema:
                 new_schema["items"] = append_null_nested(schema["items"])
 

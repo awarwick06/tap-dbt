@@ -141,7 +141,8 @@ class ConnectionsStream(AccountBasedStream):
 
     name = "connections"
     path = "/accounts/{account_id}/connections"
-    openapi_ref = "Connection"
+    openapi_ref = "AccountConnection"
+    api_version = "v3"
     selected_by_default = False
 
 
