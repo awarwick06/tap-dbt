@@ -141,7 +141,8 @@ class ConnectionsStream(AccountBasedStream):
 
     name = "connections"
     path = "/accounts/{account_id}/connections"
-    openapi_ref = "Connection"
+    openapi_ref = "AccountConnection"
+    api_version = "v3"
     selected_by_default = False
 
 
@@ -301,6 +302,7 @@ class RunArtifacts(AccountBasedStream):
         row["account_id"] = context["account_id"]
         row["run_id"] = context["run_id"]
         return row
+
 
 class RunDetailStream(AccountBasedStream):
     """A stream for the runs endpoint including additional information."""
