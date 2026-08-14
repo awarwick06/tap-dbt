@@ -571,7 +571,7 @@ def users_response(faker: Faker):
 
 
 @responses.activate
-def test_standard_tap_tests(  # noqa: PLR0913
+def test_standard_tap_tests(  # noqa: PLR0913  # ruff: ignore[PLR0917]
     accounts_response: dict,
     audit_logs_response: dict,
     connections_response: dict,

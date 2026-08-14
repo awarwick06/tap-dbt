@@ -30,6 +30,7 @@ classifiers = [
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
 ]
 dynamic = [ "version" ]
 dependencies = [
@@ -39,7 +40,6 @@ dependencies = [
   "singer-sdk~=0.48.0",
   "typing-extensions>=4.14.1",
 ]
-
 urls.Documentation = "https://github.com/MeltanoLabs/tap-dbt/blob/main/README.md"
 urls.Homepage = "https://github.com/MeltanoLabs/tap-dbt"
 urls.Repository = "https://github.com/MeltanoLabs/tap-dbt"
@@ -53,8 +53,11 @@ dev = [
   "responses~=0.25.0",
 ]
 
-[tool.hatch.version]
-source = "vcs"
+[tool.hatch]
+version.source = "vcs"
+
+[tool.uv]
+required-version = ">=0.5.19"
 
 [tool.ruff]
 line-length = 88
@@ -67,10 +70,10 @@ lint.select = [
 ]
 lint.ignore = [
   "COM812", # missing-trailing-comma
+  "CPY001", # missing-copyright-notice
   "FIX002", # line-contains-todo
   "ISC001", # single-line-implicit-string-concatenation
 ]
-
 lint.per-file-ignores."tests/*" = [
   "ANN201",
   "S101",
@@ -87,19 +90,12 @@ lint.isort.required-imports = [
 lint.pydocstyle.convention = "google"
 
 [tool.deptry]
+per_rule_ignores.DEP001 = [ "backports" ]
+per_rule_ignores.DEP002 = [ "backports-datetime-fromisoformat", "requests" ]
 known_first_party = [
   "tap_dbt",
 ]
-
-[tool.deptry.package_module_name_map]
-"backports-datetime-fromisoformat" = "backports.datetime_fromisoformat"
-faker = "faker"
-pytest = "pytest"
-responses = "responses"
-
-[tool.deptry.per_rule_ignores]
-DEP001 = [ "backports" ]
-DEP002 = [ "backports-datetime-fromisoformat", "requests" ]
-
-[tool.uv]
-required-version = ">=0.5.19"
+package_module_name_map.backports-datetime-fromisoformat = "backports.datetime_fromisoformat"
+package_module_name_map.faker = "faker"
+package_module_name_map.pytest = "pytest"
+package_module_name_map.responses = "responses"

@@ -303,6 +303,7 @@ class RunArtifacts(AccountBasedStream):
         row["run_id"] = context["run_id"]
         return row
 
+
 class RunDetailStream(AccountBasedStream):
     """A stream for the runs endpoint including additional information."""
 

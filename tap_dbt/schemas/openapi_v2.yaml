@@ -1293,7 +1293,7 @@ components:
         execution:
           type: "object"
           properties:
-            timeout_seconds: 
+            timeout_seconds:
               type: "integer"
         settings:
           type: object
@@ -1405,7 +1405,7 @@ components:
         environment:
           type: "object"
           properties:
-            account_id: 
+            account_id:
               type: "integer"
             project_id:
               type: "integer"
@@ -1469,11 +1469,11 @@ components:
         job_completion_trigger_condition:
           type: "object"
           properties:
-            job_id: 
+            job_id:
               type: "integer"
-            project_id: 
+            project_id:
               type: "integer"
-            statuses: 
+            statuses:
               type: "array"
               items:
                 type: "integer"
@@ -1720,7 +1720,7 @@ components:
           enum: ["Queued", "Starting", "Running", "Success", "Error", "Cancelled"]
         created_at_humanized:
           type: "string"
-        environment: 
+        environment:
           type: "object"
           properties:
             id:
@@ -1758,7 +1758,7 @@ components:
               enum: ["development", "deployment"]
             created_by_id:
               type: "integer"
-            state: 
+            state:
               type: "integer"
               example: 1
             created_at:
@@ -1808,11 +1808,11 @@ components:
                 deploy_key:
                   type: "object"
                   properties:
-                    account_id: 
+                    account_id:
                       type: "integer"
-                    public_key: 
+                    public_key:
                       type: "string"
-                    state: 
+                    state:
                       type: "integer"
                       default: 1
                       example: 1
@@ -1879,7 +1879,7 @@ components:
                   execution:
                     type: "object"
                     properties:
-                      timeout_seconds: 
+                      timeout_seconds:
                         type: "integer"
                   generate_docs:
                     type: "boolean"
@@ -1902,7 +1902,7 @@ components:
                   settings:
                     type: "object"
                     properties:
-                      threads: 
+                      threads:
                         type: "integer"
                       target_name:
                         type: "string"
@@ -1957,7 +1957,7 @@ components:
                         type: "string"
                   generate_sources:
                     type: "boolean"
-                    default: false 
+                    default: false
             custom_environment_variables:
               type: "array"
               items:
@@ -2054,7 +2054,7 @@ components:
               structured_debug_logs:
                 type: "string"
               truncated_structured_debug_logs:
-                type: "string" 
+                type: "string"
         deprecation:
           type: "object"
           properties:

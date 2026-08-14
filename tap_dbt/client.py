@@ -86,7 +86,6 @@ class DBTStream(RESTStream):
             if "properties" in schema:
                 new_schema["properties"] = {}
                 for p_name, p_schema in schema["properties"].items():
-
                     # don't include properties without a defined type
                     if "type" not in p_schema:
                         self.logger.warning(
