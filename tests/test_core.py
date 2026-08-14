@@ -603,7 +603,7 @@ def test_standard_tap_tests(  # noqa: PLR0913
 
     responses.add(
         responses.GET,
-        "https://cloud.getdbt.com/api/v2/accounts/1000/connections",
+        "https://cloud.getdbt.com/api/v3/accounts/1000/connections",
         json=connections_response,
         status=200,
     )
@@ -698,7 +698,6 @@ def test_standard_tap_tests(  # noqa: PLR0913
         ),
     ],
 )
-
 def test_dynamic_base_url(
     base_url_config: str, stream_cls: type, base_url_expected: str
 ) -> None:
