@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import datetime
 import json
-import sys
 import typing as t
 from http import HTTPStatus
 
@@ -17,11 +16,6 @@ from tap_dbt.client import DBTStream
 if t.TYPE_CHECKING:
     import requests
     from singer_sdk.helpers.types import Context
-
-if sys.version_info < (3, 11):
-    from backports.datetime_fromisoformat import MonkeyPatch
-
-    MonkeyPatch.patch_fromisoformat()
 
 
 class AccountBasedStream(DBTStream):
@@ -77,57 +71,6 @@ class AccountBasedStream(DBTStream):
         return params
 
 
-class AccountBasedIncrementalStream(AccountBasedStream):
-    """Account stream that can be synced incrementally by a datetime field.
-
-    Requires a reverse sorted response such that syncing stops once the
-    replication_key value is less than the bookmark
-
-    """
-
-    def get_url_params(
-        self,
-        context: dict,
-        next_page_token: int,
-    ) -> dict:
-        """Reverse-sort the list by id if performing INCREMENTAL sync."""
-        params = super().get_url_params(context, next_page_token)
-
-        if self.get_starting_timestamp(context):
-            # Precede replication key with minus to reverse sort
-            params["order_by"] = f"-{self.replication_key}"
-
-        return params
-
-    @override
-    def get_records(self, context: dict | None) -> t.Iterable[dict[str, t.Any]]:
-        starting_replication_key_value = self.get_starting_timestamp(context)
-
-        for record in self.request_records(context):
-            transformed_record = self.post_process(record, context)
-            if transformed_record is None:
-                # Record filtered out during post_process()
-                continue
-
-            if (
-                starting_replication_key_value is not None
-                and record[self.replication_key] is not None
-            ):
-                record_last_received_datetime = datetime.datetime.fromisoformat(
-                    record[self.replication_key],
-                )
-
-                if record_last_received_datetime < starting_replication_key_value:
-                    self.logger.info(
-                        "Breaking after hitting a record with replication key %s < %s",
-                        record_last_received_datetime,
-                        starting_replication_key_value,
-                    )
-                    break
-
-            yield transformed_record
-
-
 class AccountsStream(DBTStream):
     """A stream for the accounts endpoint."""
 
@@ -180,7 +123,7 @@ class RepositoriesStream(AccountBasedStream):
     selected_by_default = False
 
 
-class RunsStream(AccountBasedIncrementalStream):
+class RunsStream(AccountBasedStream):
     """A stream for the runs endpoint."""
 
     name = "runs"
